@@ -1,0 +1,15 @@
+
+stages:
+- stage: Build
+  pool:
+    name: Automation-Pool
+  jobs:
+  - job: pull_latest_web
+    displayName: pull_latest_web
+    steps:
+    - bash: |
+      pwd
+
+    displayName: 'build 1'
+
+
