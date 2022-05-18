@@ -25,9 +25,28 @@ stages:
           buildType: "current"
           artifactName: "repos"
           targetPath: '$(Pipeline.Workspace)/../repos/robot_automation'
+
+- stage: Automation_testing
+  pool:
+    name: Automation-Pool
+  jobs:
+  - job: API_testing
+    displayName: API_testing
+    steps:
       - bash: |
           cd $(Pipeline.Workspace)/../repos/robot_automation
           robot --outputdir log api_testcase
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: $(Pipeline.Workspace)/../repos/robot_automation/log
+          artifactName: log
+
+  - job: UI_testing
+    displayName: UI_testing
+    steps:
+      - bash: |
+          cd $(Pipeline.Workspace)/../repos/robot_automation
+          robot --outputdir log testcase
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: $(Pipeline.Workspace)/../repos/robot_automation/log
