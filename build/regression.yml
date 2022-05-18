@@ -9,7 +9,7 @@ resources:
       ref: master
 
 stages:
-- stage: Build
+- stage: Setup
   pool:
     name: Automation-Pool
   jobs:
@@ -25,7 +25,21 @@ stages:
           buildType: "current"
           artifactName: "repos"
           targetPath: '$(Pipeline.Workspace)/s/repos/robot_automation'
-      - bash: | 
-          echo 123
-        displayName: 'build 1'
 
+- stage: Regression
+  dependsOn: Setup
+  pool:
+    name: Automation-Pool
+  jobs:
+  - job: api_automation
+    displayName: api_automation
+    steps:
+      - bash: |
+          cd /
+          cd $(Pipeline.Workspace)/s/repos/robot_automation
+          robot --outputdir log api_testcase
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: $(Pipeline.Workspace)/s/repos/robot_automation/log
+          artifactName: log
+        
