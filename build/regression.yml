@@ -24,11 +24,11 @@ stages:
         inputs:
           buildType: "current"
           artifactName: "repos"
-          targetPath: '$(Pipeline.Workspace)/s/repos/robot_automation'
+          targetPath: '$(Pipeline.Workspace)/../repos/robot_automation'
       - bash: |
-          cd $(Pipeline.Workspace)/s/repos/robot_automation
+          cd $(Pipeline.Workspace)/../repos/robot_automation
           robot --outputdir log api_testcase
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: $(Pipeline.Workspace)/s/repos/robot_automation/log
+          pathToPublish: $(Pipeline.Workspace)/../repos/robot_automation/log
           artifactName: log
