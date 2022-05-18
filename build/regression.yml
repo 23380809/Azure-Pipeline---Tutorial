@@ -25,26 +25,10 @@ stages:
           buildType: "current"
           artifactName: "repos"
           targetPath: '$(Pipeline.Workspace)/s/repos/robot_automation'
-      - bash:
-          echo $(Pipeline.Workspace)/s/repos/robot_automation
-- stage: Regression
-  dependsOn: Setup
-  pool:
-    name: Automation-Pool
-  jobs:
-  - job: api_automation
-    displayName: api_automation
-    steps:
       - bash: |
-          pwd
-          cd /
-          pwd
-          echo $(Pipeline.Workspace)/s/repos/robot_automation
-          echo $(System.DefaultWorkingDirectory)
           cd $(Pipeline.Workspace)/s/repos/robot_automation
           robot --outputdir log api_testcase
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: $(Pipeline.Workspace)/s/repos/robot_automation/log
           artifactName: log
-        
