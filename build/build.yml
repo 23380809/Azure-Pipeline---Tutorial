@@ -1,15 +1,31 @@
+trigger:
+  - none
+
+resources:
+  repositories:
+    - repository: robot_automation
+      type: git
+      name: Shawn-web/robot_automation
+      ref: master
 
 stages:
 - stage: Build
   pool:
     name: Automation-Pool
   jobs:
-  - job: pull_latest_web
-    displayName: pull_latest_web
+  - job: fetch_test_repos
+    displayName: fetch_test_repos
     steps:
-    - bash: |
-      pwd
-
-    displayName: 'build 1'
-
+      - checkout: robot_automation
+        fetchDepth: 0
+      - publish: $(System.DefaultWorkingDirectory)
+        artifact: repos
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: "current"
+          artifactName: "repos"
+          targetPath: '$(Pipeline.Workspace)/s/repos/robot_automation'
+      - bash: | 
+          echo 123
+        displayName: 'build 1'
 
