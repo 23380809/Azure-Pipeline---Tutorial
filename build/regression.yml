@@ -25,7 +25,8 @@ stages:
           buildType: "current"
           artifactName: "repos"
           targetPath: '$(Pipeline.Workspace)/s/repos/robot_automation'
-
+      - bash:
+          echo $(Pipeline.Workspace)/s/repos/robot_automation
 - stage: Regression
   dependsOn: Setup
   pool:
@@ -35,7 +36,11 @@ stages:
     displayName: api_automation
     steps:
       - bash: |
+          pwd
           cd /
+          pwd
+          echo $(Pipeline.Workspace)/s/repos/robot_automation
+          echo $(System.DefaultWorkingDirectory)
           cd $(Pipeline.Workspace)/s/repos/robot_automation
           robot --outputdir log api_testcase
       - task: PublishBuildArtifacts@1
