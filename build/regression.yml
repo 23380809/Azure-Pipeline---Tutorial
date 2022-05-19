@@ -25,6 +25,14 @@ stages:
           buildType: "current"
           artifactName: "repos"
           targetPath: '$(Pipeline.Workspace)/../repos/robot_automation'
+  - job: install_required_packages
+    displayName: install_required_packages
+    dependson:
+      - fetch_test_repos
+    steps:
+      - bash: |
+          sudo pip install robotframework
+          sudo pip install robotframework-selenium2library
 
 - stage: Automation_testing
   pool:
@@ -37,6 +45,8 @@ stages:
           pwd
           cd $(Pipeline.Workspace)/../repos/robot_automation
           pwd
+          robot --version
+          pip list
           robot --outputdir log api_testcase
       - task: PublishBuildArtifacts@1
         inputs:
