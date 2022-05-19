@@ -27,7 +27,7 @@ stages:
           targetPath: '$(Pipeline.Workspace)/../repos/robot_automation'
   - job: install_required_packages
     displayName: install_required_packages
-    dependson:
+    dependsOn:
       - fetch_test_repos
     steps:
       - bash: |
