@@ -42,11 +42,7 @@ stages:
     displayName: API_testing
     steps:
       - bash: |
-          pwd
           cd $(Pipeline.Workspace)/../repos/robot_automation
-          pwd
-          robot --version
-          pip list
           robot --outputdir log api_testcase
       - task: PublishBuildArtifacts@1
         inputs:
@@ -57,9 +53,7 @@ stages:
     displayName: UI_testing
     steps:
       - bash: |
-          pwd
           cd $(Pipeline.Workspace)/../repos/robot_automation
-          pwd
           robot --outputdir log testcase
       - task: PublishBuildArtifacts@1
         inputs:
